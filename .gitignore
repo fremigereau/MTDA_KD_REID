@@ -1,0 +1,4 @@
+/.idea/*
+/log/
+/reid-data/
+__pycache__
