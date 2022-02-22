@@ -2,9 +2,7 @@ from __future__ import absolute_import
 import torch
 
 from .resnet import *
-from .resnet_spcl import *
 from .mobilenetv2 import *
-from .distiller_adv import Distiller_ADV
 from .dsbn import DSBN1d, DSBN2d, convert_dsbn
 from .osnet import *
 
@@ -16,12 +14,6 @@ __model_factory = {
     'resnet50': resnet50,
     'resnet101': resnet101,
     'resnet152': resnet152,
-    #SPCL-torchreid models
-    'resnet18_SPCL': resnet18_SPCL,
-    'resnet34_SPCL': resnet34_SPCL,
-    'resnet50_SPCL': resnet50_SPCL,
-    'resnet101_SPCL': resnet101_SPCL,
-    'resnet152_SPCL': resnet152_SPCL,
     #MobileNet
     'mobilenetv2': mobilenetv2_x1_4,
     #osnet

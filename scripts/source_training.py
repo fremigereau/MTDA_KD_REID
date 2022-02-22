@@ -125,7 +125,6 @@ if __name__ == '__main__':
     parser.add_argument('--dropout', type=float, default=0)
     parser.add_argument('--momentum', type=float, default=0.2,
                         help="update momentum for the hybrid memory")
-    parser.add_argument('-fc', action='store_false', default=True)
     # optimizer
     parser.add_argument('--optimizer', type=str, default='adam')
     parser.add_argument('--lr', type=float, default=0.0003,

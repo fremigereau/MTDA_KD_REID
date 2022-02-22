@@ -6,7 +6,7 @@ from torchreid.utils import (
     AverageMeter, open_all_layers, open_specified_layers
 )
 from torchreid.losses import KLDivergenceLoss, \
-    MaximumMeanDiscrepancy, TripletLoss, CrossEntropyLoss, MarginLoss, FocalLoss, LogEuclidLoss
+    MaximumMeanDiscrepancy, TripletLoss, CrossEntropyLoss, MarginLoss, LogEuclidLoss
 from ..engine import Engine
 import torch
 from itertools import cycle
@@ -31,7 +31,7 @@ class StoreAverageMeters(object):
         self.data_time = AverageMeter()
 
 
-class MarginMTDAEngineOnebyOne(Engine):
+class KDMTDAEngineOnebyOne(Engine):
 
     def __init__(
             self,
@@ -53,7 +53,7 @@ class MarginMTDAEngineOnebyOne(Engine):
             target_order='random',
             log_loss=False
     ):
-        super(MarginMTDAEngineOnebyOne, self).__init__(
+        super(KDMTDAEngineOnebyOne, self).__init__(
             datamanager,
             model_student, optimizer_student, scheduler_student,
             models_teacher_list, optimizer_teacher_list, scheduler_teacher_list,
@@ -83,7 +83,6 @@ class MarginMTDAEngineOnebyOne(Engine):
             distance_only=False
         )
         self.criterion_margin = MarginLoss()
-        self.criterion_focal = FocalLoss(class_num=2)
         self.criterion_log_euclid = LogEuclidLoss(log=False)
 
     def train(

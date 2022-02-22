@@ -4,9 +4,7 @@ from .cross_entropy_loss import CrossEntropyLoss
 from .hard_mine_triplet_loss import TripletLoss
 from .maximum_mean_discrepancy import MaximumMeanDiscrepancy
 from .KL_divergence_loss import KLDivergenceLoss
-from .domain_classifier_loss import DomainClassifierLoss
 from .margin_loss import MarginLoss
-from .FocalLoss import FocalLoss
 from .log_euclid_loss import LogEuclidLoss
 
 def DeepSupervision(criterion, xs, y):

@@ -10,7 +10,7 @@ import argparse
 def main():
     args = parser.parse_args()
 
-    log_dir = 'log/final_tests/KD_ReID_LKD_target_{stda}_except_cuhk/{sources}2{targets}{cuhk_split}/{teacher}_t_{student}_s/{multi_head}{target_alt}{kd_style}{target_order}{lkd_s_w}{lda_w}'.format(
+    log_dir = 'log/KD_ReID_{stda}/{sources}2{targets}{cuhk_split}/{teacher}_t_{student}_s/{target_alt}{kd_style}{target_order}{lkd_s_w}{lda_w}'.format(
                 stda=args.stda,
                 target_alt='' if args.target_alt == 'full' else '_target_alt_' + args.target_alt,
                 kd_style='_kd_style_outs_feats' if args.kd_style == 'all' else '_kd_style_' + args.kd_style,
@@ -21,7 +21,6 @@ def main():
                 '+'.join([str(elem) for elem in args.dataset_target]),
                 teacher=args.arch_teacher,
                 student=args.arch_student,
-                multi_head='_multi_head' if args.multi_head else '',
                 lkd_s_w='' if args.lkds_weight == 0 else '_lkds_' + str(args.lkds_weight),
                 lda_w='' if args.lda_weight == 0 else '_lda_' + str(args.lda_weight),
                 cuhk_split='_new_cuhk' if args.new_cuhk else ''
@@ -84,7 +83,7 @@ def main():
     optimizer_teacher_list = list()
     scheduler_teacher_list = list()
 
-    for i in range(0, (len(datamanager.targets)-1)):
+    for i in range(0, len(datamanager.targets)):
             model, optimizer, scheduler, start_epoch = torchreid.initialize_model_optimizer_scheduler(
                     name=args.arch_teacher, num_classes=num_classes,
                     loss='kd_reid', pretrained=True,
@@ -100,23 +99,8 @@ def main():
             optimizer_teacher_list.append(optimizer)
             scheduler_teacher_list.append(scheduler)
 
-    model, optimizer, scheduler, start_epoch = torchreid.initialize_model_optimizer_scheduler(
-        name=args.arch_teacher, num_classes=datamanager.num_train_pids,
-        loss='kd_reid', pretrained=True,
-        optimizer_type=args.optimizer, lr=args.lr,
-        lr_scheduler=args.scheduler, stepsize=args.step_size,
-        path_model=args.model_path_teachers[-1],
-        teacher_arch=None,
-        spcl=False,
-        load_optim=False,
-        fc_dim=args.features
-    )
-    models_teacher_list.append(model)
-    optimizer_teacher_list.append(optimizer)
-    scheduler_teacher_list.append(scheduler)
-
     if args.target_alt == 'full':
-            engine = torchreid.engine.MarginMTDAEngineOnebyOne(
+            engine = torchreid.engine.KDMTDAEngineOnebyOne(
                     datamanager=datamanager,
                     model_student=model_student,
                     optimizer_student=optimizer_student,
@@ -134,7 +118,7 @@ def main():
                     log_loss=args.log_loss
             )
     elif args.target_alt == 'batch':
-            engine = torchreid.engine.MarginMTDAEnginePerBatch(
+            engine = torchreid.engine.MTDAEnginePerBatch(
                 datamanager=datamanager,
                 model_student=model_student,
                 optimizer_student=optimizer_student,
@@ -196,7 +180,6 @@ if __name__ == '__main__':
     parser.add_argument('--dropout', type=float, default=0)
     parser.add_argument('--momentum', type=float, default=0.2,
                         help="update momentum for the hybrid memory")
-    parser.add_argument('-fc', action='store_false', default=True)
     parser.add_argument('--multi-head', action='store_true', default=False)
     # optimizer
     parser.add_argument('--optimizer', type=str, default='sgd')
