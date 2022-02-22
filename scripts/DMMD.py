@@ -118,7 +118,7 @@ if __name__ == '__main__':
     parser.add_argument('--print-freq', type=int, default=100)
     parser.add_argument('--eval-freq', type=int, default=10)
     parser.add_argument('--tensorboard', action='store_true', default=False)
-    # path
+    # pathmp
     working_dir = osp.dirname(osp.abspath(__file__))
     parser.add_argument('--data-dir', type=str, metavar='PATH', default=osp.join(working_dir, 'data'))
     parser.add_argument('-mp', '--model-path', type=str, metavar='PATH')
