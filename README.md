@@ -1,5 +1,4 @@
-# [Unsupervised Domain Adaptation in the dissimilarity space for Person Re-identification](https://arxiv.org/abs/2007.13890 "Unsupervised Domain Adaptation in the dissimilarity space for Person Re-identification")
-
+# [Knowledge Distillation for Multi-Target Domain Adaptation in Real-Time Person Re-Identification]
 ## Installation
 
 
