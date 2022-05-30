@@ -1,4 +1,4 @@
-# [Knowledge Distillation for Multi-Target Domain Adaptation in Real-Time Person Re-Identification]
+# Knowledge Distillation for Multi-Target Domain Adaptation in Real-Time Person Re-Identification
 ## Installation
 
 
